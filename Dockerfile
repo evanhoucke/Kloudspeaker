@@ -1,14 +1,6 @@
 FROM php:5-apache
 
-RUN \
-  echo "Acquire::http::Proxy \"http://172.16.94.245:3129\";" | tee -a /etc/apt/apt.conf.d/75proxconf && \
-  echo "Acquire::https::Proxy \"http://172.16.94.245:3129\";" | tee -a /etc/apt/apt.conf.d/75proxconf && \
-  cat /etc/apt/apt.conf.d/75proxconf
-
 RUN apt-get update && apt-get install -y unzip wget php5-pgsql php5-mysql php5-dev php5-curl php5-ldap php5-sqlite sqlite3
-
-ENV http_proxy="http://proxy.a-sis.division-savoye.ad:3129"
-ENV https_proxy="http://proxy.a-sis.division-savoye.ad:3129"
 
 RUN cd /var/www/ && wget -O kloudspeaker.zip http://www.kloudspeaker.com/download/latest.php && unzip kloudspeaker.zip -d /var/www/
 RUN rm -rf /var/www/html && mv /var/www/kloudspeaker/ /var/www/html
